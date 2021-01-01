@@ -1,7 +1,5 @@
 @echo off
 
-rem TODO: Add screenshots
-
 rem for dynamic linking
 set compilerFlags=-nologo -EHsc -fp:fast -O2 -Oi -WX -W4 -wd4100 -wd4244 -wd4458 -wd4996 -FC -Z7 
 rem for static linking

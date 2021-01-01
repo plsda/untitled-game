@@ -107,11 +107,11 @@ Ohjelma::Ohjelma(string valikonTausta, string pelinTausta, string tilemapinKuvat
 	kierrokset.setColor(sf::Color(0, 0, 0, 200));
 	kierrokset.setPosition(400, 10);
 
-	jatkaPelia.setFont(this->fontti);
-	jatkaPelia.setString("Ready");
-	jatkaPelia.setCharacterSize(15);
-	jatkaPelia.setColor(sf::Color(0, 0, 0, 200));
-	jatkaPelia.setPosition(400, 500);
+	jatkaPeliaTeksti.setFont(this->fontti);
+	jatkaPeliaTeksti.setString("Ready");
+	jatkaPeliaTeksti.setCharacterSize(15);
+	jatkaPeliaTeksti.setColor(sf::Color(0, 0, 0, 200));
+	jatkaPeliaTeksti.setPosition(400, 500);
 
 	vihollistenMaaraKierroksessa = 5;
 	vihollistenMaara = 0;
@@ -150,7 +150,7 @@ bool Ohjelma::onkoPeliOhiValittu()
 
 bool Ohjelma::onkoJatkaValittu()
 {
-	return onkoNappiValittu(jatkaPelia, tapahtuma);
+	return onkoNappiValittu(jatkaPeliaTeksti, tapahtuma);
 }
 
 bool Ohjelma::onkoNappiValittu(sf::Text teksti, sf::Event* t)
@@ -158,10 +158,6 @@ bool Ohjelma::onkoNappiValittu(sf::Text teksti, sf::Event* t)
 	sf::FloatRect rajat = teksti.getGlobalBounds();
 
 	return (rajat.contains((float)t->mouseButton.x, (float)t->mouseButton.y) && (t->mouseButton.button == sf::Mouse::Left));
-	//if (rajat.contains((float)tapahtuma->mouseButton.x, (float)tapahtuma->mouseButton.y))
-	//	return true;
-	//else
-	//	return false;
 }
 
 void Ohjelma::aloitaPeli()
@@ -180,7 +176,8 @@ void Ohjelma::aloitaPeli()
 		kello.restart();
 		arvottuAika = (rand() % 6000) + 1000;
 	}
-	else if (vihollistenMaara >= vihollistenMaaraKierroksessa)
+	//else if (vihollistenMaara >= vihollistenMaaraKierroksessa)
+	else if (pViholliset->haeVihollistenMaara() <= 0)
 	{
 		//kauppa ja ostohetki
 
@@ -215,6 +212,7 @@ void Ohjelma::aloitaPeli()
 
 					if (pViholliset->viholliset.at(i).kunto <= 0)
 					{
+
 						pViholliset->muutaKuolleeksi(i);
 						pPartikkelit->muodostaPartikkeleita(pTykki->ammukset.at(j).luoti.getPosition(), 600, sf::Color::Black, true);
 					}
@@ -279,7 +277,7 @@ void Ohjelma::piirraPelitilanne()
 	ikkuna->draw(kierrokset);
 
 
-	if (vihollistenMaara >= vihollistenMaaraKierroksessa)
+	if((vihollistenMaara >= vihollistenMaaraKierroksessa) && (pViholliset->haeVihollistenMaara() <= 0))
 	{
 		piirraKierrosOhi();
 		pKauppa->piirraKaupanSisalto(ikkuna, tapahtuma);
@@ -322,18 +320,27 @@ void Ohjelma::piirraPeliOhi()
 
 void Ohjelma::piirraKierrosOhi()
 {
-	ikkuna->draw(jatkaPelia);
+	ikkuna->draw(jatkaPeliaTeksti);
 }
 
 void Ohjelma::nollaaPeli()
 {
 	tykkiOnTuhoutunut = false;
+	kierrokset.setString("0");
 	pTykki->nollaa();
 	pViholliset->nollaa();
 }
 
 void Ohjelma::pysaytaPeli()
 {
+	viimeAika = aika;
 	piirraPelitilanne();
 	ikkuna->draw(odotaTeksti);
+}
+
+void Ohjelma::jatkaPelia()
+{
+	paivitysKello.restart();
+	kello.restart();
+	liikuttamisKello.restart();
 }

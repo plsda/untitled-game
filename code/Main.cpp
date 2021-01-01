@@ -42,7 +42,10 @@ int main()
 				if (tapahtuma.type == sf::Event::KeyPressed)
 				{
 					if (tapahtuma.key.code == sf::Keyboard::Escape)
+					{
+						pPeli->nollaaPeli();
 						pelinTila = VALIKKO;
+					}
 				
 
 					if (tapahtuma.key.code == sf::Keyboard::P)
@@ -50,6 +53,7 @@ int main()
 						if (pelinTila == ODOTA)
 						{
 							pelinTila = PELAA;
+							pPeli->jatkaPelia();
 							clog << "JATKA" << endl;
 						}
 						else
@@ -101,7 +105,9 @@ int main()
 			}
 			
 			if (pPeli->tykkiOnTuhoutunut)
+			{
 				pelinTila = PELI_OHI;
+			}
 
 			switch (pelinTila)
 			{

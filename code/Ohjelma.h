@@ -29,18 +29,19 @@ class Ohjelma
 	 void ammu(); 
 	 void nollaaPeli();
 	 void pysaytaPeli();
+	 void jatkaPelia();
 	 bool tykkiOnTuhoutunut;
 
  private:
 	 sf::RenderWindow* ikkuna;
 	 sf::Event* tapahtuma;
 	 sf::Font fontti;
-	 sf::Text pelaaTeksti, ohjeetTeksti, ohjeteksti, peliOhiTeksti, odotaTeksti, kierrokset, jatkaPelia;
+	 sf::Text pelaaTeksti, ohjeetTeksti, ohjeteksti, peliOhiTeksti, odotaTeksti, kierrokset, jatkaPeliaTeksti;
 	 sf::Sprite pelinTausta, valikonTausta, tilemapinKuvat, pimennysSprite;
 	 sf::Texture pelinTekstuuri, valikonTekstuuri, tilemapinTekstuuri, pimennysTekstuuri;
 	 sf::Image taustanMaski;
 	 sf::Clock paivitysKello, liikuttamisKello, kello;
-	 sf::Time paivitysAika, liikuttamisAika, aika;
+	 sf::Time paivitysAika, liikuttamisAika, aika, viimeAika;
 
 	 TileMappi kentanPiirto;
 	 Kauppa* pKauppa;

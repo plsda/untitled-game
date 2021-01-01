@@ -1,0 +1,14 @@
+*.exe
+*.obj
+*.sbr
+*.sln
+*.pdb
+*.vcxproj
+*.filters
+*.user
+*.db
+*.suo
+.vs/
+**/debug.bat
+**/run.bat
+**/shell.bat
